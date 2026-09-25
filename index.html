@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Italy Solo Trip · Oct 12–19, 2026</title>
+<meta name="description" content="Rome, Bologna, Florence, Pisa, Venice and Milan — an 8-day solo itinerary with budget calculator, maps, transport and travel requirements.">
+<style>
+:root{--bg:#f7f3ec;--card:#fff;--ink:#26221e;--mut:#6d645b;--acc:#b8452c;--acc2:#2d6a5c;--gold:#c99a3b;--line:#e8e0d3;--soft:#f1ebe0;--shadow:0 6px 24px rgba(60,40,20,.09)}
+@media(prefers-color-scheme:dark){:root{--bg:#171412;--card:#221e1b;--ink:#f3ede4;--mut:#aaa196;--acc:#e5836a;--acc2:#72c2b0;--gold:#e0b45a;--line:#38322d;--soft:#2b2622;--shadow:0 6px 24px rgba(0,0,0,.35)}}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.6 "Segoe UI",system-ui,-apple-system,Roboto,sans-serif}
+a{color:var(--acc)}
+h1,h2,h3{font-family:Georgia,"Times New Roman",serif;line-height:1.2}
+/* hero */
+.hero{position:relative;min-height:340px;display:flex;align-items:flex-end;color:#fff;background:linear-gradient(135deg,#6f2a19,#b8452c 55%,#2d6a5c);overflow:hidden}
+.hero .bg{position:absolute;inset:0;display:grid;grid-template-columns:repeat(4,1fr)}
+.hero .bg div{background-size:cover;background-position:center;opacity:.9}
+.hero:after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(20,10,5,.15),rgba(20,10,5,.78))}
+.hero .in{position:relative;z-index:1;max-width:1040px;margin:auto;width:100%;padding:28px 20px 30px}
+.hero h1{margin:0;font-size:clamp(30px,6vw,56px);text-shadow:0 2px 12px rgba(0,0,0,.4)}
+.hero p{margin:6px 0 0;font-size:clamp(15px,2.4vw,19px);text-shadow:0 1px 8px rgba(0,0,0,.5)}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
+.chips span{background:rgba(255,255,255,.18);backdrop-filter:blur(6px);border:1px solid rgba(255,255,255,.35);border-radius:99px;padding:3px 13px;font-size:13px}
+/* tabs */
+.tabs{position:sticky;top:0;z-index:20;background:var(--card);border-bottom:1px solid var(--line);box-shadow:0 2px 10px rgba(0,0,0,.05)}
+.tabs .row{max-width:1040px;margin:auto;display:flex;overflow-x:auto;padding:0 8px;scrollbar-width:none}
+.tabs button{flex:none;border:0;background:none;color:var(--mut);font:600 15px inherit;font-family:inherit;padding:14px 16px;cursor:pointer;border-bottom:3px solid transparent}
+.tabs button:hover{color:var(--ink)}
+.tabs button.on{color:var(--acc);border-bottom-color:var(--acc)}
+main{max-width:1040px;margin:auto;padding:26px 16px 70px}
+.panel{display:none;animation:fade .3s}
+.panel.on{display:block}
+@keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1}}
+h2{font-size:clamp(24px,4vw,32px);margin:0 0 6px}
+h3{font-size:22px;margin:26px 0 10px}
+.lead{color:var(--mut);margin:0 0 18px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:18px;box-shadow:var(--shadow);margin-bottom:16px}
+.grid{display:grid;gap:16px;grid-template-columns:repeat(auto-fit,minmax(290px,1fr))}
+.grid.g2{grid-template-columns:repeat(auto-fit,minmax(420px,1fr))}
+@media(max-width:520px){.grid.g2{grid-template-columns:1fr}}
+/* photos */
+.ph{position:relative;overflow:hidden;border-radius:12px;background:linear-gradient(135deg,var(--acc2),var(--acc));aspect-ratio:4/3;color:#fff}
+.ph img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .5s;opacity:0}
+.ph img.ld{opacity:1}
+.ph:hover img{transform:scale(1.05)}
+.ph figcaption,.ph .cap{position:absolute;left:0;right:0;bottom:0;padding:22px 12px 8px;font-size:13px;background:linear-gradient(transparent,rgba(0,0,0,.7))}
+.ph.wide{aspect-ratio:16/7}
+.mosaic{display:grid;gap:10px;grid-template-columns:repeat(4,1fr);grid-auto-rows:150px;margin-bottom:18px}
+.mosaic .ph{aspect-ratio:auto;height:100%}
+.mosaic .ph:nth-child(1){grid-column:span 2;grid-row:span 2}
+.mosaic .ph:nth-child(6){grid-column:span 2}
+@media(max-width:700px){.mosaic{grid-template-columns:repeat(2,1fr);grid-auto-rows:120px}}
+.tag{display:inline-block;background:var(--soft);border-radius:99px;padding:2px 11px;font-size:12px;font-weight:600;margin-right:6px;color:var(--mut)}
+.btn{display:inline-block;padding:6px 13px;border:1px solid var(--acc);border-radius:9px;text-decoration:none;font-size:13.5px;margin:6px 6px 0 0;color:var(--acc);font-weight:600}
+.btn:hover{background:var(--acc);color:#fff}
+.btn.fill{background:var(--acc);color:#fff}
+table{width:100%;border-collapse:collapse;font-size:15px}
+th,td{padding:9px 8px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}
+th{color:var(--mut);font-size:12px;text-transform:uppercase;letter-spacing:.05em}
+.scroll{overflow-x:auto}
+.sm{color:var(--mut);font-size:13.5px}
+/* timeline days */
+.day{border-left:4px solid var(--acc);}
+.day .hd{display:flex;gap:14px;align-items:baseline;flex-wrap:wrap}
+.day .date{font:700 15px Georgia,serif;color:var(--acc)}
+.day h3{margin:0}
+.day .body{display:grid;gap:16px;grid-template-columns:1fr 240px;margin-top:10px}
+@media(max-width:720px){.day .body{grid-template-columns:1fr}}
+.stops{list-style:none;padding:0;margin:6px 0}
+.stops li{padding:5px 0 5px 24px;position:relative;border-bottom:1px dashed var(--line)}
+.stops li:before{content:"";position:absolute;left:4px;top:13px;width:9px;height:9px;border-radius:50%;background:var(--acc2)}
+.tip{background:rgba(45,106,92,.11);border-left:4px solid var(--acc2);border-radius:8px;padding:9px 13px;margin-top:10px;font-size:14.5px}
+.food{color:var(--mut);font-size:14.5px;margin-top:8px}
+details.como{margin-top:14px;border:2px dashed var(--acc2);border-radius:14px;padding:4px 14px;background:rgba(45,106,92,.06)}
+details.como summary{cursor:pointer;font:700 17px Georgia,serif;padding:10px 0;color:var(--acc2)}
+.tl{list-style:none;padding:0;margin:8px 0}
+.tl li{display:grid;grid-template-columns:78px 1fr;gap:10px;padding:6px 0;border-bottom:1px dashed var(--line)}
+.tl b{color:var(--acc)}
+/* budget */
+input[type=number]{width:88px;padding:5px 7px;border:1px solid var(--line);border-radius:8px;background:var(--bg);color:var(--ink);font:inherit}
+select{padding:5px;border-radius:8px;border:1px solid var(--line);background:var(--bg);color:var(--ink);font:inherit;max-width:100%}
+.total td{font:700 20px Georgia,serif;border-top:3px double var(--ink)}
+.fx{display:flex;flex-wrap:wrap;gap:10px;align-items:center;background:var(--soft);padding:10px 14px;border-radius:12px;margin-bottom:12px}
+.stat{display:flex;gap:14px;flex-wrap:wrap;margin:10px 0}
+.stat div{flex:1;min-width:150px;background:var(--soft);border-radius:12px;padding:12px}
+.stat b{display:block;font:700 26px Georgia,serif;color:var(--acc)}
+/* notes */
+.warn{background:rgba(201,154,59,.14);border-left:4px solid var(--gold);border-radius:8px;padding:10px 14px;margin:12px 0;font-size:14.5px}
+ul.chk{list-style:none;padding:0}
+ul.chk li{padding:4px 0 4px 26px;position:relative}
+ul.chk li:before{content:"✓";position:absolute;left:0;color:var(--acc2);font-weight:700}
+footer{text-align:center;color:var(--mut);font-size:13px;padding:0 16px 40px}
+@media print{.tabs{display:none}.panel{display:block!important}.hero{min-height:180px}}
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="bg" id="heroBg"></div>
+  <div class="in">
+    <h1>Italy Solo Trip</h1>
+    <p>Rome · Bologna · Florence &amp; Pisa · Venice · Milan (+ Lake Como)</p>
+    <div class="chips"><span>Oct 12–19, 2026</span><span>7 nights · 8 days</span><span>High-speed rail</span><span>Mid-range hotels</span></div>
+  </div>
+</header>
+
+<nav class="tabs"><div class="row" role="tablist">
+  <button data-tab="overview" class="on">Overview</button>
+  <button data-tab="days">Day by Day</button>
+  <button data-tab="transport">Transport</button>
+  <button data-tab="times">Best Times</button>
+  <button data-tab="budget">Budget</button>
+  <button data-tab="notes">Notes</button>
+</div></nav>
+
+<main>
+
+<!-- OVERVIEW -->
+<section class="panel on" id="overview">
+  <h2>Overview</h2>
+  <p class="lead">Eight days, five cities and two optional side trips, using Bologna as a central base for the Tuscany and Venice day trips.</p>
+  <div class="mosaic" id="mosaic"></div>
+
+  <div class="card scroll"><table id="glT"><tr><th>Date</th><th>Overnight</th><th>Plan</th></tr></table></div>
+
+  <h3>Where you'll stay</h3>
+  <p class="sm">Nightly rates are rough estimates in US dollars (not live prices). Map links open Google Maps; check availability and current rates on each hotel's website. The photo on each card shows the surrounding area.</p>
+  <div id="hotelBox"></div>
+</section>
+
+<!-- DAY BY DAY -->
+<section class="panel" id="days">
+  <h2>Day by Day</h2>
+  <p class="lead">Every stop has a map link. Lake Como is tucked into October 18 as an optional add-on.</p>
+  <div id="dayBox"></div>
+</section>
+
+<!-- TRANSPORT -->
+<section class="panel" id="transport">
+  <h2>Transport</h2>
+  <p class="lead">High-speed trains link all the main cities. Compare Trenitalia and Italo, and book early for the best fares.</p>
+  <div class="card scroll"><table id="trT"><tr><th>Route</th><th>Stations (map)</th><th>Time</th><th>Typical fare</th></tr></table>
+    <p><a class="btn fill" target="_blank" rel="noopener" href="https://www.trenitalia.com/en.html">Trenitalia</a><a class="btn fill" target="_blank" rel="noopener" href="https://www.italotreno.com/en">Italo</a><a class="btn" target="_blank" rel="noopener" href="https://www.navigazionelaghi.it/en/">Lake Como ferries</a></p>
+  </div>
+  <div class="grid">
+    <div class="card"><h3 style="margin-top:0">Airports to city</h3>
+      <ul class="chk"><li><b>Rome Fiumicino (FCO):</b> Leonardo Express to Termini (~32 min, ~<span data-e="14"></span>) or fixed-fare taxi (~<span data-e="55"></span>).</li>
+      <li><b>Milan Malpensa (MXP):</b> Malpensa Express to Centrale or Cadorna (~50 min).</li>
+      <li><b>Milan Linate (LIN):</b> M4 metro (~20 min to the centre).</li></ul></div>
+    <div class="card"><h3 style="margin-top:0">Local transport</h3>
+      <ul class="chk"><li><b>Rome:</b> Metro A/B, buses, lots of walking.</li><li><b>Bologna:</b> compact and walkable.</li><li><b>Venice:</b> vaporetto (~<span data-e="9.5"></span> single; day passes available). No cars, no wheels on the bridges, so pack light.</li><li><b>Milan:</b> M1/M2/M3 metro and trams.</li></ul></div>
+    <div class="card"><h3 style="margin-top:0">Tickets</h3>
+      <ul class="chk"><li>High-speed tickets are seat-assigned. Advance fares are cheaper.</li><li>Regional trains: <b>validate</b> the paper ticket at the green/yellow machine before boarding, or risk a fine.</li><li>Check the platform (binario) on the departure board about 15 minutes before.</li><li>Use <b>Venezia Santa Lucia</b>, not Mestre.</li></ul></div>
+  </div>
+  <div class="card"><h3 style="margin-top:0">Lake Como transport (optional, Oct 18)</h3>
+    <ul class="chk"><li><b>Milano Centrale → Como San Giovanni:</b> ~35–40 min, roughly <span data-e="5-9"></span>.</li><li><b>Milano Centrale → Varenna-Esino:</b> ~1 h 10 min, roughly <span data-e="7-11"></span> — the more scenic option.</li><li><b>Milano Cadorna → Como Nord Lago:</b> Trenord, ~1 h.</li><li><b>Ferries and hydrofoils</b> connect Como, Bellagio, Varenna and Menaggio (~15–90 min depending on route). Check the autumn timetable.</li></ul>
+    <a class="btn" target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query=Como%20San%20Giovanni%20railway%20station">Como station</a><a class="btn" target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query=Varenna-Esino%20railway%20station">Varenna-Esino</a><a class="btn" target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query=Bellagio%2C%20Lake%20Como">Bellagio</a><a class="btn" target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query=Milano%20Cadorna%20station">Milano Cadorna</a></div>
+</section>
+
+<!-- BEST TIMES -->
+<section class="panel" id="times">
+  <h2>Best Times &amp; Options by Time of Day</h2>
+  <p class="lead">When to move, when to sightsee, and how to get around at each hour.</p>
+  <div class="grid">
+    <div class="card"><div class="ph wide" data-wp="Trevi Fountain" data-c="Trevi at dawn: crowds are thinnest"></div><h3>Early morning · 6:30–9:00</h3><p>Best for day-trip trains (Florence/Pisa, Venice) and for beating the crowds at the Colosseum, Trevi and St. Mark's. High-speed trains are frequent; regional trains are the cheapest. Taxis are scarce, so pre-book.</p></div>
+    <div class="card"><div class="ph wide" data-wp="Piazza Maggiore" data-c="Midday: a long lunch in the shade"></div><h3>Midday · 10:00–15:00</h3><p>Best for city-to-city transfers (Rome → Bologna, Bologna → Milan): calm stations and an easy afternoon check-in. Attractions are busiest, so plan indoor sights and a leisurely lunch.</p></div>
+    <div class="card"><div class="ph wide" data-wp="Ponte Vecchio" data-c="Golden light on the Arno"></div><h3>Late afternoon · 15:00–19:00</h3><p>Great for rooftops and viewpoints (Duomo terraces, Florence, Pisa) in golden light. Return trains from day trips leave around now; commuter crowds build after 5 PM.</p></div>
+    <div class="card"><div class="ph wide" data-wp="Naviglio Grande" data-c="Aperitivo hour on the Navigli"></div><h3>Evening · 19:00 onward</h3><p>Best for Trevi, Navigli aperitivo and Bologna's porticoes. Late regional trains run until about 9–11 PM; metros close around midnight (Milan) or 11:30 PM (Rome). Use licensed taxis or a taxi app.</p></div>
+  </div>
+  <div class="card"><h3 style="margin-top:0">October at a glance</h3>
+    <ul class="chk"><li>Typical highs are about 60s–70s °F (15–23 °C) with cooler mornings. Bring layers and a light rain jacket; autumn showers are common.</li>
+    <li>Venice can flood at high tide (acqua alta) in autumn. Bring waterproof shoes and check the alert app.</li>
+    <li>Italy is on daylight time (UTC+2) until Oct 25, 2026, which is 6–8 hours ahead of US time zones; expect some jet lag on day one.</li>
+    <li>Lunch is roughly 12:30–2:30 PM and dinner rarely starts before 7:30 PM. Some shops close mid-afternoon; churches often close 12–3 PM.</li></ul></div>
+</section>
+
+<!-- BUDGET -->
+<section class="panel" id="budget">
+  <h2>Budget Calculator</h2>
+  <p class="lead">Choose a hotel per city, edit any figure, and the totals update automatically (airfare excluded).</p>
+  <div class="card">
+    <div class="fx"><b>Exchange rate:</b> 1 EUR = $ <input type="number" id="fx" value="1.17" step="0.01" min="0.5"> <span class="sm">Assumed; enter today's rate and everything on the page updates.</span></div>
+    <div class="scroll" id="budBox"></div>
+    <div class="stat"><div><b id="tot">—</b>Estimated total</div><div><b id="pd">—</b>Per day (8 days)</div><div><b id="hs">—</b>Hotels share</div></div>
+    <p class="sm">Original planning range: €2,000–€3,160 before airfare.</p>
+  </div>
+</section>
+
+<!-- NOTES -->
+<section class="panel" id="notes">
+  <h2>Notes &amp; Travel Requirements</h2>
+  <p class="lead">Documents, border rules and practical tips. Rules change; confirm with the official sources linked below before you fly.</p>
+
+  <div class="warn"><b>Which passport?</b> This section covers a <b>US passport holder</b> first. If you travel on a different passport, or are a US green-card or visa holder, entry rules for Italy and re-entry rules for the US are different. See the "other status" boxes below.</div>
+
+  <h3>Entering Italy (Schengen area)</h3>
+  <div class="grid">
+    <div class="card"><h4 style="margin-top:0">Passport</h4><ul class="chk"><li>Must be valid for at least <b>3 months after you leave</b> the Schengen area (through Jan 19, 2027 at minimum). <b>6 months</b> is safer.</li><li>Issued within the last 10 years, with blank pages.</li><li>US citizens: no visa for stays up to <b>90 days in any 180-day period</b>.</li><li>Carry a copy of the photo page, stored separately.</li></ul></div>
+    <div class="card"><h4 style="margin-top:0">EES biometric registration</h4><ul class="chk"><li>The EU's Entry/Exit System registers non-EU visitors (fingerprints and photo) at first entry and replaces passport stamping.</li><li>It began rolling out in Oct 2025 and was scheduled to be fully in place by April 2026, so expect a short registration step at your first Schengen border, possibly a kiosk.</li><li>Allow extra time on arrival, especially at busy airports.</li></ul></div>
+    <div class="card"><h4 style="margin-top:0">ETIAS</h4><ul class="chk"><li>The EU's ETIAS travel authorisation (about €20) has been repeatedly delayed. Sources I found say it is not yet required, with launch expected late 2026 or 2027.</li><li><b>Verify before you go</b> on the official EU site. Only apply through official EU pages; look-alike sites charge extra.</li></ul>
+    <a class="btn" target="_blank" rel="noopener" href="https://travel-europe.europa.eu/etias_en">EU ETIAS site</a><a class="btn" target="_blank" rel="noopener" href="https://travel-europe.europa.eu/ees_en">EU EES site</a></div>
+    <div class="card"><h4 style="margin-top:0">At the border</h4><ul class="chk"><li>Have your hotel bookings, onward/return ticket and proof of funds handy (rarely asked, but allowed).</li><li>Fill in nothing online for Italy; there is no arrival card.</li><li>Cash above €10,000 must be declared on entry or exit.</li></ul></div>
+  </div>
+  <div class="warn"><b>Other status (green card, visa, other passport):</b> carry your passport <i>and</i> your green card (Form I-551) or valid US visa. Check whether your passport needs a Schengen visa at <a target="_blank" rel="noopener" href="https://travel-europe.europa.eu/">travel-europe.europa.eu</a>, and confirm with the Italian consulate if unsure.</div>
+
+  <h3>Returning to the United States (CBP)</h3>
+  <div class="grid">
+    <div class="card"><h4 style="margin-top:0">Documents</h4><ul class="chk"><li><b>US citizens:</b> a valid US passport (a Real ID driver's licence is not enough for international flights).</li><li><b>Green-card holders:</b> passport plus green card. Absences over 6 months can raise questions about residency.</li><li><b>Visa holders:</b> passport, valid visa and your I-94 status; check that your status permits re-entry.</li></ul></div>
+    <div class="card"><h4 style="margin-top:0">Faster processing</h4><ul class="chk"><li><b>Mobile Passport Control</b> (free app) can speed up the line at many airports.</li><li><b>Global Entry</b> (paid, background check and interview) uses kiosks. Apply well in advance if you want it for future trips.</li><li>Keep the airline's flight number and your US address handy.</li></ul>
+    <a class="btn" target="_blank" rel="noopener" href="https://www.cbp.gov/travel/us-citizens/know-before-you-go/what-expect-when-you-return">CBP: returning</a></div>
+    <div class="card"><h4 style="margin-top:0">Customs allowances</h4><ul class="chk"><li>Personal duty-free exemption is typically <b>$800</b> per person if you've been abroad 48 hours or more (limits on alcohol and tobacco apply).</li><li>Alcohol: about 1 litre duty-free, age 21+. Tobacco: about 200 cigarettes.</li><li>Declare cash or monetary instruments of <b>$10,000 or more</b>.</li><li>Keep receipts for gifts and purchases.</li></ul></div>
+    <div class="card"><h4 style="margin-top:0">Food to bring home</h4><ul class="chk"><li>You must <b>declare all food</b>, even if it turns out to be allowed.</li><li>Meat and pork products (cured meats such as mortadella and prosciutto) are generally restricted. Fresh produce, plants and some dairy are also restricted.</li><li>Sealed hard cheeses, olive oil, vinegar, dried pasta and chocolate are usually fine. Check CBP's guidance before buying.</li></ul></div>
+  </div>
+
+  <h3>Before you leave</h3>
+  <div class="grid">
+    <div class="card"><ul class="chk"><li>Enrol in the free <b>Smart Traveler Enrollment Program (STEP)</b> so the US Embassy can reach you in an emergency.</li><li>Buy travel insurance with medical cover; US health plans usually do not cover Italy.</li><li>Tell your bank and card issuers about your dates. Carry two cards and some cash.</li><li>Check that your phone plan has roaming or buy an eSIM.</li></ul></div>
+    <div class="card"><ul class="chk"><li><b>Emergencies:</b> dial <b>112</b> in Italy.</li><li><b>US Embassy Rome:</b> Via Vittorio Veneto 121, Rome. <a target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query=US%20Embassy%20Rome%2C%20Via%20Vittorio%20Veneto%20121">Map</a></li><li>Power: 230 V with Type F/L plugs. Bring an adapter (most US chargers are dual-voltage).</li><li>Medication: carry it in original packaging with a doctor's letter for prescriptions.</li></ul></div>
+    <div class="card"><ul class="chk"><li>Book ahead: Colosseum (name-matched tickets), Duomo rooftop, Last Supper, rail tickets.</li><li>Churches require covered shoulders and knees.</li><li>Hotels collect a <b>city tax</b> per person per night (roughly <span data-e="3-8"></span>), paid at the desk and not included in online prices.</li><li>Watch for pickpockets at stations and on crowded metros; keep your passport in a hotel safe and carry a copy.</li><li>Tap water is safe; a restaurant "coperto" (cover charge) is normal and tipping is modest.</li></ul></div>
+  </div>
+
+  <div class="card"><h3 style="margin-top:0">Priority experiences</h3>
+    <p><b>Rome:</b> Colosseum, Forum, Trevi at night, carbonara · <b>Bologna:</b> porticoes, Piazza Maggiore, Two Towers, tagliatelle al ragù · <b>Florence:</b> Duomo, Ponte Vecchio, bistecca · <b>Pisa:</b> Leaning Tower · <b>Venice:</b> St. Mark's, Rialto, vaporetto, cicchetti · <b>Milan:</b> Duomo rooftop, Galleria, Last Supper, Navigli · <b>Lake Como:</b> lakefront, funicular, ferries.</p>
+    <p>Also: compare Trenitalia and Italo, keep the Florence + Pisa day flexible, and stay near rail stations in Bologna and Milan.</p></div>
+
+  <p class="sm">Official sources: <a target="_blank" rel="noopener" href="https://travel.state.gov/content/travel/en/international-travel/International-Travel-Country-Information-Pages/Italy.html">US State Dept: Italy</a> · <a target="_blank" rel="noopener" href="https://www.cbp.gov/travel/us-citizens/know-before-you-go/know-you-go-traveling-abroad">CBP: traveling abroad</a> · <a target="_blank" rel="noopener" href="https://www.cbp.gov/travel/international-visitors/kbyg/types-exemptions">CBP: exemptions</a> · <a target="_blank" rel="noopener" href="https://travel-europe.europa.eu/">EU travel site</a></p>
+</section>
+
+</main>
+<footer>Hotel prices, train fares, availability and schedules can change. Verify before booking. Photos from Wikipedia / Wikimedia Commons.</footer>
+
+<script>
+const $=id=>document.getElementById(id);
+let R=1.17;
+const fmt=n=>"$"+Math.round(n).toLocaleString("en-US");
+const eur=n=>fmt(n*R);
+const gm=q=>"https://www.google.com/maps/search/?api=1&query="+encodeURIComponent(q);
+const gimg=q=>"https://www.google.com/search?tbm=isch&q="+encodeURIComponent(q);
+
+/* ---------- data ---------- */
+const CITIES=[
+ {id:"rome",name:"Rome",dates:"Oct 12–14 · 2 nights",nights:2,pic:"Rome",
+  hotels:[
+   {n:"FH55 Grand Hotel Palatino",a:"Via Cavour 213, 00184 Rome",q:"FH55 Grand Hotel Palatino Rome",site:"https://www.fhhotelgroup.it/en/index",lo:250,hi:400,wp:"Roman Forum",near:"Near the Roman Forum",d:"Steps from Cavour metro and the Colosseum and Forum, about a 10-minute walk to Termini."},
+   {n:"Le Boutique Hotel",a:"Rome (confirm address on the hotel site)",q:"Le Boutique Hotel Rome",site:"https://www.hotelleboutique.com/",lo:180,hi:320,wp:"Pantheon, Rome",near:"Central Rome",d:"Boutique-style stay in central Rome. Confirm exact location and rates on the official site."}]},
+ {id:"bologna",name:"Bologna",dates:"Oct 14–17 · 3 nights",nights:3,pic:"Bologna",
+  hotels:[
+   {n:"UNAHOTELS Bologna Centro",a:"Bologna city centre, near Piazza Maggiore",q:"UNAHOTELS Bologna Centro",site:"https://www.bolognawelcome.com/en/accommodation-facilities/hotels/una-hotels-bolognacentro-en",lo:165,hi:270,wp:"Piazza Maggiore",near:"Near Piazza Maggiore",d:"4-star hotel in the historic centre, close to Piazza Maggiore."},
+   {n:"I Portici Hotel Bologna",a:"Via Indipendenza 69, Bologna",q:"I Portici Hotel Bologna",site:"https://www.iporticihotel.com/",lo:165,hi:270,wp:"Porticoes of Bologna",near:"Under Bologna's porticoes",d:"Design hotel on Via Indipendenza, an easy walk from Bologna Centrale."}]},
+ {id:"milan",name:"Milan",dates:"Oct 17–19 · 2 nights",nights:2,pic:"Milan Cathedral",
+  hotels:[
+   {n:"Hotel Dei Cavalieri Milano Duomo",a:"Piazza Missori 1, Milan",q:"Hotel Dei Cavalieri Milano Duomo",site:"https://www.hoteldeicavalieri.com/",lo:200,hi:300,wp:"Milan Cathedral",near:"Near the Duomo",d:"Beside Missori metro, a short walk to the Duomo."},
+   {n:"Hotel Milano Castello",a:"Milan city centre, near Castello Sforzesco",q:"Hotel Milano Castello Milan",site:"https://www.hotelmilanocastello.com/",lo:180,hi:280,wp:"Sforza Castle",near:"Near Castello Sforzesco",d:"Design hotel in the centre, close to the Duomo and the Castello."}]}
+];
+const DAYS=[
+ {dt:"Oct 12",city:"Rome",t:"Arrive in Rome",ov:"Arrive + Trevi, Pantheon, Piazza Navona",wp:"Trevi Fountain",i:"Keep day one easy after the international flight.",
+  s:[["Piazza della Repubblica","Piazza della Repubblica, Rome"],["Trevi Fountain (magical in the evening)","Trevi Fountain, Rome"],["Pantheon","Pantheon, Rome"],["Piazza Navona","Piazza Navona, Rome"],["Campo de' Fiori","Campo de' Fiori, Rome"]],
+  f:"Cacio e pepe, carbonara, amatriciana, supplì, saltimbocca, Roman artichokes. Try Ristorante Virginiae or Osteria Dar Bruttone.",
+  tip:"Trevi and the Pantheon are calmest before 8:30 AM or after 9 PM. Fiumicino to Termini: Leonardo Express (~32 min) or a fixed-fare taxi."},
+ {dt:"Oct 13",city:"Rome",t:"Ancient Rome",ov:"Colosseum, Forum, Palatine, Monti",wp:"Colosseum",i:"Reserve timed Colosseum entry in advance.",
+  s:[["9:00 AM · Colosseum (1.5–2 h)","Colosseum, Rome"],["11:00 AM · Roman Forum + Palatine Hill","Roman Forum, Rome"],["1:00 PM · Lunch in Monti","Monti, Rome"],["2:30 PM · Victor Emmanuel II Monument / Piazza Venezia","Piazza Venezia, Rome"],["3:15 PM · Capitoline Hill","Capitoline Hill, Rome"],["4:00 PM · Trevi → Spanish Steps → Piazza del Popolo","Spanish Steps, Rome"]],
+  f:"Carbonara, Roman pizza, porchetta sandwich, supplì.",
+  tip:"The first Colosseum slot beats both crowds and midday heat. Take Metro B (Colosseo) or walk from Monti."},
+ {dt:"Oct 14",city:"Bologna",t:"Rome → Bologna",ov:"Rome → Bologna + historic centre",wp:"Piazza Maggiore",i:"Check out after breakfast, take Frecciarossa or Italo (~2 h), then explore.",
+  s:[["Roma Termini (departure)","Roma Termini"],["Bologna Centrale (arrival)","Bologna Centrale"],["Piazza Maggiore","Piazza Maggiore, Bologna"],["Basilica di San Petronio","Basilica di San Petronio, Bologna"],["Neptune Fountain","Fontana del Nettuno, Bologna"],["Quadrilatero market streets","Quadrilatero, Bologna"],["Two Towers","Due Torri, Bologna"]],
+  f:"Tagliatelle al ragù, tortellini in brodo, lasagne verdi, mortadella. Try Trattoria dal Biassanot or Da Cesari.",
+  tip:"A mid-morning train (~10:00–11:00) avoids commuters and lets you drop bags early. Hotel from the station is a 10–15 minute walk, bus or taxi."},
+ {dt:"Oct 15",city:"Bologna",t:"Florence + Pisa day trip",ov:"Florence + Pisa day trip",wp:"Florence Cathedral",i:"The most ambitious day. Skip Pisa if you'd rather have a relaxed Florence.",
+  s:[["Firenze Santa Maria Novella","Firenze Santa Maria Novella"],["Duomo of Florence","Duomo di Firenze"],["Piazza della Signoria","Piazza della Signoria, Florence"],["Ponte Vecchio","Ponte Vecchio, Florence"],["Pisa Centrale","Pisa Centrale"],["Piazza dei Miracoli (Leaning Tower)","Piazza dei Miracoli, Pisa"]],
+  f:"Bistecca alla Fiorentina, ribollita, schiacciata, lampredotto, gelato.",
+  tip:"Leave Bologna ~7:30–8:00 AM (35–40 min to Florence). Leave Pisa by ~5–6 PM (about 2 h back). The Tower photographs best in late-afternoon light. Skip the Uffizi unless art is a priority."},
+ {dt:"Oct 16",city:"Bologna",t:"Venice day trip",ov:"Venice day trip",wp:"Grand Canal (Venice)",i:"Use Venezia Santa Lucia so you arrive directly in historic Venice.",
+  s:[["Venezia Santa Lucia","Venezia Santa Lucia"],["Rialto Bridge","Rialto Bridge, Venice"],["St. Mark's Square and Basilica","Piazza San Marco, Venice"],["Doge's Palace","Doge's Palace, Venice"],["Dorsoduro (quieter side)","Dorsoduro, Venice"],["Cannaregio","Cannaregio, Venice"]],
+  f:"Cicchetti, sarde in saor, bigoli in salsa, baccalà mantecato, fritto misto.",
+  tip:"Take a ~7:00–8:00 AM train (~1.5 h) so St. Mark's is quiet. Ride Vaporetto Line 1 for a scenic Grand Canal trip and be back at Santa Lucia by early evening."},
+ {dt:"Oct 17",city:"Milan",t:"Bologna → Milan",ov:"Bologna → Milan + Duomo/Brera",wp:"Milan Cathedral",i:"Fast trains take about 1 hour.",
+  s:[["Milano Centrale","Milano Centrale"],["Duomo di Milano (rooftop if weather is good)","Duomo di Milano"],["Galleria Vittorio Emanuele II","Galleria Vittorio Emanuele II, Milan"],["Teatro alla Scala","Teatro alla Scala, Milan"],["Evening in Brera","Brera, Milan"]],
+  f:"Risotto alla Milanese, ossobuco, cotoletta. Try Damm-atrà or Osteria Milanese OSSBUS.",
+  tip:"Take a mid-morning train, then go up the Duomo rooftop in late afternoon for golden light. Metro M1/M3 to Duomo."},
+ {dt:"Oct 18",city:"Milan",t:"Last Supper + Milan (+ Lake Como)",ov:"Last Supper, Castello, Navigli (+ optional Lake Como)",wp:"The Last Supper (Leonardo)",i:"Reserve the Last Supper well in advance. Lake Como is an optional add-on if you want a lake fix.",
+  s:[["Last Supper, Santa Maria delle Grazie","Santa Maria delle Grazie, Milan"],["Castello Sforzesco","Castello Sforzesco, Milan"],["Leonardo da Vinci Science Museum","Museo Nazionale della Scienza e della Tecnologia Leonardo da Vinci, Milan"],["Navigli canals + aperitivo","Navigli, Milan"]],
+  f:"Dinner: Bela Tusa Trattoria or Premiata Trattoria Arlati dal 1936.",
+  tip:"Book the earliest Last Supper slot. Navigli is liveliest 6–9 PM for aperitivo.", como:true},
+ {dt:"Oct 19",city:"Milan",t:"Departure",ov:"Departure from Milan",wp:"Galleria Vittorio Emanuele II",i:"For a later flight, enjoy a last Duomo/Galleria/Brera walk or shopping.",
+  s:[["Milano Centrale","Milano Centrale"],["Malpensa Airport (MXP)","Milan Malpensa Airport"],["Linate Airport (LIN)","Milan Linate Airport"]],
+  f:"",tip:"Malpensa Express from Centrale/Cadorna ~50 min; Linate via M4 ~20 min. Arrive 3 hours before international flights."}
+];
+const COMO=[["8:15","Last Supper (earliest slot, ~45 min). Coffee nearby."],["9:30","Quick Castello Sforzesco walk-through, then metro to Milano Centrale."],["10:30","Train to <b>Como San Giovanni</b> (~40 min) or <b>Varenna-Esino</b> (~1 h 10)."],["11:30","Lakefront, Duomo of Como, lunch by the water."],["1:30 PM","Brunate funicular for lake views, or a ferry to <b>Bellagio</b> or Varenna."],["4:30 PM","Head back; trains to Milan are frequent."],["6:30 PM","Back in Milan for aperitivo at Navigli. Science Museum is skipped on this plan."]];
+const TRAINS=[
+ ["Rome → Bologna","Roma Termini → Bologna Centrale","~2 h",25,50,"Roma Termini","Bologna Centrale"],
+ ["Bologna → Florence","Bologna Centrale → Firenze S.M. Novella","35–40 min",10,25,"Bologna Centrale","Firenze Santa Maria Novella"],
+ ["Florence → Pisa","Firenze S.M. Novella → Pisa Centrale","~1 h",9,12,"Firenze Santa Maria Novella","Pisa Centrale"],
+ ["Pisa → Bologna","Pisa Centrale → Bologna Centrale","~2 h",20,35,"Pisa Centrale","Bologna Centrale"],
+ ["Bologna → Venice","Bologna Centrale → Venezia Santa Lucia","~1.5 h",20,40,"Bologna Centrale","Venezia Santa Lucia"],
+ ["Bologna → Milan","Bologna Centrale → Milano Centrale","~1 h",20,40,"Bologna Centrale","Milano Centrale"],
+ ["Milan → Como (optional)","Milano Centrale → Como San Giovanni","35–40 min",5,9,"Milano Centrale","Como San Giovanni railway station"]
+];
+
+/* ---------- photos via Wikipedia API (loaded live in your browser) ---------- */
+function photo(title,cap,cls){return `<figure class="ph ${cls||""}" data-wp="${title}" style="margin:0"><img alt="${cap||title}" referrerpolicy="no-referrer"><figcaption>${cap||title}</figcaption></figure>`}
+async function loadPhotos(){
+  const els=[...document.querySelectorAll("[data-wp]")];
+  const titles=[...new Set(els.map(e=>e.dataset.wp))];
+  const map={};
+  for(let i=0;i<titles.length;i+=40){
+    const chunk=titles.slice(i,i+40);
+    try{
+      const r=await fetch("https://en.wikipedia.org/w/api.php?action=query&format=json&origin=*&redirects=1&prop=pageimages&piprop=thumbnail&pithumbsize=1000&titles="+encodeURIComponent(chunk.join("|")));
+      const j=await r.json(),q=j.query,alias={};
+      (q.normalized||[]).forEach(x=>alias[x.from]=x.to);(q.redirects||[]).forEach(x=>alias[x.from]=x.to);
+      const byTitle={};Object.values(q.pages).forEach(p=>{if(p.thumbnail)byTitle[p.title]=p.thumbnail.source});
+      chunk.forEach(t=>{let k=t;for(let n=0;n<3&&alias[k];n++)k=alias[k];if(byTitle[k])map[t]=byTitle[k]});
+    }catch(e){}
+  }
+  els.forEach(el=>{
+    const u=map[el.dataset.wp];
+    if(el.dataset.c&&!el.querySelector("figcaption")){el.insertAdjacentHTML("beforeend",`<img alt="${el.dataset.c}" referrerpolicy="no-referrer"><figcaption>${el.dataset.c}</figcaption>`)}
+    const img=el.querySelector("img");
+    if(u&&img){img.onload=()=>img.classList.add("ld");img.src=u}
+    else if(!el.querySelector("figcaption")){el.insertAdjacentHTML("beforeend",`<div class="cap">${el.dataset.wp}</div>`)}
+  });
+  // hero backdrop
+  const hb=$("heroBg");["Colosseum","Florence Cathedral","Grand Canal (Venice)","Milan Cathedral"].forEach(t=>{const d=document.createElement("div");if(map[t])d.style.backgroundImage=`url("${map[t]}")`;hb.appendChild(d)});
+}
+
+/* ---------- render ---------- */
+// overview
+DAYS.forEach(d=>$("glT").insertAdjacentHTML("beforeend",`<tr><td><b>${d.dt}</b></td><td>${d.dt=="Oct 19"?"—":d.city}</td><td><a href="#days" data-go="d${d.dt.replace(" ","")}">${d.ov}</a></td></tr>`));
+$("mosaic").innerHTML=[["Colosseum","Colosseum, Rome"],["Piazza Maggiore","Piazza Maggiore, Bologna"],["Ponte Vecchio","Ponte Vecchio, Florence"],["Leaning Tower of Pisa","Leaning Tower of Pisa"],["Grand Canal (Venice)","Grand Canal, Venice"],["Milan Cathedral","Duomo di Milano"],["Lake Como","Lake Como (optional)"]].map(([t,c])=>photo(t,c)).join("");
+$("hotelBox").innerHTML=CITIES.map(c=>`<h3>${c.name} <span class="tag">${c.dates}</span></h3><div class="grid">`+c.hotels.map(h=>`<div class="card" style="padding:0;overflow:hidden">${photo(h.wp,h.near,"wide").replace('style="margin:0"','style="margin:0;border-radius:0"')}<div style="padding:16px"><b style="font-size:18px">${h.n}</b><br><span class="sm">${h.a}</span><p>${h.d}</p><p><b class="hp" data-lo="${h.lo}" data-hi="${h.hi}">${eur(h.lo)}–${eur(h.hi)}</b> <span class="sm">per night (est.)</span></p><a class="btn fill" target="_blank" rel="noopener" href="${gm(h.q)}">Map</a><a class="btn" target="_blank" rel="noopener" href="${h.site}">Website</a><a class="btn" target="_blank" rel="noopener" href="${gimg(h.q)}">Photos</a></div></div>`).join("")+`</div>`).join("");
+
+// days
+$("dayBox").innerHTML=DAYS.map(d=>{
+  const id="d"+d.dt.replace(" ","");
+  const como=d.como?`<details class="como"><summary>Optional: squeeze in Lake Como today</summary>
+    <p class="sm">Best if you'd rather trade the Science Museum and a slow afternoon for the lake. Times are approximate; check timetables.</p>
+    <ul class="tl">${COMO.map(x=>`<li><b>${x[0]}</b><span>${x[1]}</span></li>`).join("")}</ul>
+    <div class="grid" style="margin:10px 0">${photo("Lake Como","Lake Como")}${photo("Bellagio, Italy","Bellagio")}${photo("Varenna","Varenna")}</div>
+    <p class="sm">Extra cost roughly <b data-e="30-60"></b> for trains, a ferry and lunch. Skip it if the Last Supper is your only morning slot or the weather is poor.</p>
+    <a class="btn" target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query=Como%20San%20Giovanni%20railway%20station">Como (map)</a><a class="btn" target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query=Varenna-Esino%20railway%20station">Varenna-Esino (map)</a><a class="btn" target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query=Bellagio%2C%20Lake%20Como">Bellagio (map)</a><a class="btn" target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query=Milano%20Cadorna%20station">Milano Cadorna (map)</a>
+  </details>`:"";
+  return `<article class="card day" id="${id}"><div class="hd"><span class="date">${d.dt}</span><span class="tag">${d.city}</span><h3>${d.t}</h3></div><p class="sm" style="margin:6px 0 0">${d.i}</p>
+  <div class="body"><div><ul class="stops">${d.s.map(s=>`<li>${s[0]} · <a target="_blank" rel="noopener" href="${gm(s[1])}">map</a></li>`).join("")}</ul>${d.f?`<div class="food"><b>Eat:</b> ${d.f}</div>`:""}<div class="tip"><b>Timing:</b> ${d.tip}</div></div>${photo(d.wp,d.wp.replace(/, Rome| \(Venice\)| \(Leonardo\)/,""))}</div>${como}</article>`}).join("");
+
+// transport
+TRAINS.forEach(t=>{const [a,b]=[t[5],t[6]];$("trT").insertAdjacentHTML("beforeend",`<tr><td><b>${t[0]}</b></td><td><a target="_blank" rel="noopener" href="${gm(a)}">${a}</a> → <a target="_blank" rel="noopener" href="${gm(b)}">${b}</a></td><td>${t[2]}</td><td class="tp" data-lo="${t[3]}" data-hi="${t[4]}">${eur(t[3])}–${eur(t[4])}</td></tr>`)});
+
+// budget
+let h=`<table id="bt"><tr><th>Item</th><th>Hotel</th><th>Rate / night</th><th>Nights</th><th>Total</th></tr>`;
+CITIES.forEach(c=>{h+=`<tr><td><b>${c.name}</b></td><td><select id="s_${c.id}">${c.hotels.map((x,i)=>`<option value="${i}">${x.n}</option>`).join("")}</select></td><td>$ <input type="number" id="r_${c.id}" min="0"></td><td>${c.nights}</td><td id="t_${c.id}"></td></tr>`});
+h+=`<tr><th colspan="5">Other costs</th></tr>`;
+[["Trains (Rome→Bologna, Florence/Pisa, Venice, Milan)",200],["Local transportation",65],["Major attractions",140],["Food",375],["City hotel tax (est.)",35]].forEach(r=>{h+=`<tr><td colspan="3">${r[0]}</td><td colspan="2">$ <input type="number" class="oc" value="${Math.round(r[1]*R)}" min="0"></td></tr>`});
+h+=`<tr><td colspan="3"><label><input type="checkbox" id="comoChk"> Include optional Lake Como day trip</label></td><td colspan="2">$ <input type="number" id="comoC" class="oc2" value="${Math.round(45*R)}" min="0"></td></tr><tr class="total"><td colspan="3">Estimated total (excl. airfare)</td><td colspan="2" id="tot2"></td></tr></table>`;
+$("budBox").innerHTML=h;
+function calc(){let t=0,hh=0;CITIES.forEach(c=>{const s=(+$("r_"+c.id).value||0)*c.nights;$("t_"+c.id).textContent=fmt(s);t+=s;hh+=s});
+ document.querySelectorAll(".oc").forEach(i=>t+=+i.value||0);if($("comoChk").checked)t+=+$("comoC").value||0;
+ $("tot").textContent=fmt(t);$("tot2").textContent=fmt(t);$("pd").textContent=fmt(t/8);$("hs").textContent=t?Math.round(hh/t*100)+"%":"0%"}
+CITIES.forEach(c=>{const set=()=>{const x=c.hotels[+$("s_"+c.id).value];$("r_"+c.id).value=Math.round((x.lo+x.hi)/2*R);calc()};$("s_"+c.id).onchange=set;set()});
+$("bt").addEventListener("input",calc);$("bt").addEventListener("change",calc);
+
+/* static euro spans */
+function stat(){document.querySelectorAll("[data-e]").forEach(e=>{const v=e.dataset.e.split("-").map(Number);e.textContent=v.length>1?fmt(v[0]*R)+"–"+fmt(v[1]*R):fmt(v[0]*R)})}
+stat();calc();
+
+/* exchange rate change */
+$("fx").addEventListener("input",()=>{const v=parseFloat($("fx").value);if(!(v>0))return;const old=R;R=v;
+ CITIES.forEach(c=>{const i=$("r_"+c.id);i.value=Math.round(i.value/old*R)});
+ document.querySelectorAll(".oc,.oc2").forEach(i=>i.value=Math.round(i.value/old*R));
+ document.querySelectorAll(".hp,.tp").forEach(e=>e.textContent=fmt(+e.dataset.lo*R)+"–"+fmt(+e.dataset.hi*R));
+ stat();calc()});
+
+/* tabs */
+function show(id){if(!document.getElementById(id)||!document.getElementById(id).classList.contains("panel"))id="overview";
+ document.querySelectorAll(".panel").forEach(p=>p.classList.toggle("on",p.id===id));
+ document.querySelectorAll(".tabs button").forEach(b=>b.classList.toggle("on",b.dataset.tab===id));
+ window.scrollTo({top:document.querySelector(".tabs").offsetTop-2,behavior:"smooth"});
+ try{history.replaceState(null,"","#"+id)}catch(e){}}
+document.querySelectorAll(".tabs button").forEach(b=>b.onclick=()=>show(b.dataset.tab));
+document.addEventListener("click",e=>{const a=e.target.closest("[data-go]");if(a){e.preventDefault();show("days");setTimeout(()=>document.getElementById(a.dataset.go).scrollIntoView({behavior:"smooth",block:"start"}),60)}});
+if(location.hash)show(location.hash.slice(1));
+
+loadPhotos();
+</script>
+</body>
+</html>
