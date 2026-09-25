@@ -66,7 +66,7 @@ th{color:var(--mut);font-size:12px;text-transform:uppercase;letter-spacing:.05em
 .day .hd{display:flex;gap:14px;align-items:baseline;flex-wrap:wrap}
 .day .date{font:700 15px Georgia,serif;color:var(--acc)}
 .day h3{margin:0}
-.day .body{display:grid;gap:16px;grid-template-columns:1fr 240px;margin-top:10px}
+.day .body{display:grid;gap:16px;grid-template-columns:1fr 250px;margin-top:10px;align-items:start}
 @media(max-width:720px){.day .body{grid-template-columns:1fr}}
 .stops{list-style:none;padding:0;margin:6px 0}
 .stops li{padding:5px 0 5px 24px;position:relative;border-bottom:1px dashed var(--line)}
@@ -92,6 +92,13 @@ ul.chk{list-style:none;padding:0}
 ul.chk li{padding:4px 0 4px 26px;position:relative}
 ul.chk li:before{content:"✓";position:absolute;left:0;color:var(--acc2);font-weight:700}
 footer{text-align:center;color:var(--mut);font-size:13px;padding:0 16px 40px}
+.hb{background:var(--soft);border-radius:12px;padding:12px 14px;margin:12px 0}.hb>div{margin-top:6px}
+.sec{margin:16px 0 6px;font:700 16px Georgia,serif;color:var(--acc2)}
+.tl2{list-style:none;padding:0;margin:0}.tl2 li{display:grid;grid-template-columns:86px 64px 1fr;gap:8px;padding:7px 0;border-bottom:1px dashed var(--line);align-items:start}
+.tl2 .tm{color:var(--acc);font-size:14px}.ty{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.04em;border-radius:6px;padding:2px 6px;text-align:center;color:#fff;background:var(--acc2)}
+.ty.food{background:var(--gold)}.ty.move{background:#6b7c93}.ty.hotel{background:var(--acc)}
+@media(max-width:560px){.tl2 li{grid-template-columns:70px 1fr}.tl2 .ty{display:none}}
+.txt{font-size:14px}
 @media print{.tabs{display:none}.panel{display:block!important}.hero{min-height:180px}}
 </style>
 </head>
@@ -133,7 +140,7 @@ footer{text-align:center;color:var(--mut);font-size:13px;padding:0 16px 40px}
 <!-- DAY BY DAY -->
 <section class="panel" id="days">
   <h2>Day by Day</h2>
-  <p class="lead">Every stop has a map link. Lake Como is tucked into October 18 as an optional add-on.</p>
+  <p class="lead">Each day has your hotel, a timed plan in walking order, a route map, and the transport legs with rough costs. Lake Como is an optional plan on Oct 18.</p>
   <div id="dayBox"></div>
 </section>
 
@@ -254,40 +261,140 @@ const CITIES=[
    {n:"Hotel Dei Cavalieri Milano Duomo",a:"Piazza Missori 1, Milan",q:"Hotel Dei Cavalieri Milano Duomo",site:"https://www.hoteldeicavalieri.com/",lo:200,hi:300,wp:"Milan Cathedral",near:"Near the Duomo",d:"Beside Missori metro, a short walk to the Duomo."},
    {n:"Hotel Milano Castello",a:"Milan city centre, near Castello Sforzesco",q:"Hotel Milano Castello Milan",site:"https://www.hotelmilanocastello.com/",lo:180,hi:280,wp:"Sforza Castle",near:"Near Castello Sforzesco",d:"Design hotel in the centre, close to the Duomo and the Castello."}]}
 ];
+const HSEL={rome:0,bologna:0,milan:0};
+const STAY={ // hotel block per day: city + mode
+ "Oct 12":["rome","in"],"Oct 13":["rome","stay","Night 2 of 2"],"Oct 14":["bologna","outin","rome"],
+ "Oct 15":["bologna","stay","Night 2 of 3"],"Oct 16":["bologna","stay","Night 3 of 3"],
+ "Oct 17":["milan","outin","bologna"],"Oct 18":["milan","stay","Night 2 of 2"],"Oct 19":["milan","out"]};
 const DAYS=[
- {dt:"Oct 12",city:"Rome",t:"Arrive in Rome",ov:"Arrive + Trevi, Pantheon, Piazza Navona",wp:"Trevi Fountain",i:"Keep day one easy after the international flight.",
-  s:[["Piazza della Repubblica","Piazza della Repubblica, Rome"],["Trevi Fountain (magical in the evening)","Trevi Fountain, Rome"],["Pantheon","Pantheon, Rome"],["Piazza Navona","Piazza Navona, Rome"],["Campo de' Fiori","Campo de' Fiori, Rome"]],
-  f:"Cacio e pepe, carbonara, amatriciana, supplì, saltimbocca, Roman artichokes. Try Ristorante Virginiae or Osteria Dar Bruttone.",
-  tip:"Trevi and the Pantheon are calmest before 8:30 AM or after 9 PM. Fiumicino to Termini: Leonardo Express (~32 min) or a fixed-fare taxi."},
- {dt:"Oct 13",city:"Rome",t:"Ancient Rome",ov:"Colosseum, Forum, Palatine, Monti",wp:"Colosseum",i:"Reserve timed Colosseum entry in advance.",
-  s:[["9:00 AM · Colosseum (1.5–2 h)","Colosseum, Rome"],["11:00 AM · Roman Forum + Palatine Hill","Roman Forum, Rome"],["1:00 PM · Lunch in Monti","Monti, Rome"],["2:30 PM · Victor Emmanuel II Monument / Piazza Venezia","Piazza Venezia, Rome"],["3:15 PM · Capitoline Hill","Capitoline Hill, Rome"],["4:00 PM · Trevi → Spanish Steps → Piazza del Popolo","Spanish Steps, Rome"]],
-  f:"Carbonara, Roman pizza, porchetta sandwich, supplì.",
-  tip:"The first Colosseum slot beats both crowds and midday heat. Take Metro B (Colosseo) or walk from Monti."},
- {dt:"Oct 14",city:"Bologna",t:"Rome → Bologna",ov:"Rome → Bologna + historic centre",wp:"Piazza Maggiore",i:"Check out after breakfast, take Frecciarossa or Italo (~2 h), then explore.",
-  s:[["Roma Termini (departure)","Roma Termini"],["Bologna Centrale (arrival)","Bologna Centrale"],["Piazza Maggiore","Piazza Maggiore, Bologna"],["Basilica di San Petronio","Basilica di San Petronio, Bologna"],["Neptune Fountain","Fontana del Nettuno, Bologna"],["Quadrilatero market streets","Quadrilatero, Bologna"],["Two Towers","Due Torri, Bologna"]],
-  f:"Tagliatelle al ragù, tortellini in brodo, lasagne verdi, mortadella. Try Trattoria dal Biassanot or Da Cesari.",
-  tip:"A mid-morning train (~10:00–11:00) avoids commuters and lets you drop bags early. Hotel from the station is a 10–15 minute walk, bus or taxi."},
- {dt:"Oct 15",city:"Bologna",t:"Florence + Pisa day trip",ov:"Florence + Pisa day trip",wp:"Florence Cathedral",i:"The most ambitious day. Skip Pisa if you'd rather have a relaxed Florence.",
-  s:[["Firenze Santa Maria Novella","Firenze Santa Maria Novella"],["Duomo of Florence","Duomo di Firenze"],["Piazza della Signoria","Piazza della Signoria, Florence"],["Ponte Vecchio","Ponte Vecchio, Florence"],["Pisa Centrale","Pisa Centrale"],["Piazza dei Miracoli (Leaning Tower)","Piazza dei Miracoli, Pisa"]],
-  f:"Bistecca alla Fiorentina, ribollita, schiacciata, lampredotto, gelato.",
-  tip:"Leave Bologna ~7:30–8:00 AM (35–40 min to Florence). Leave Pisa by ~5–6 PM (about 2 h back). The Tower photographs best in late-afternoon light. Skip the Uffizi unless art is a priority."},
- {dt:"Oct 16",city:"Bologna",t:"Venice day trip",ov:"Venice day trip",wp:"Grand Canal (Venice)",i:"Use Venezia Santa Lucia so you arrive directly in historic Venice.",
-  s:[["Venezia Santa Lucia","Venezia Santa Lucia"],["Rialto Bridge","Rialto Bridge, Venice"],["St. Mark's Square and Basilica","Piazza San Marco, Venice"],["Doge's Palace","Doge's Palace, Venice"],["Dorsoduro (quieter side)","Dorsoduro, Venice"],["Cannaregio","Cannaregio, Venice"]],
-  f:"Cicchetti, sarde in saor, bigoli in salsa, baccalà mantecato, fritto misto.",
-  tip:"Take a ~7:00–8:00 AM train (~1.5 h) so St. Mark's is quiet. Ride Vaporetto Line 1 for a scenic Grand Canal trip and be back at Santa Lucia by early evening."},
- {dt:"Oct 17",city:"Milan",t:"Bologna → Milan",ov:"Bologna → Milan + Duomo/Brera",wp:"Milan Cathedral",i:"Fast trains take about 1 hour.",
-  s:[["Milano Centrale","Milano Centrale"],["Duomo di Milano (rooftop if weather is good)","Duomo di Milano"],["Galleria Vittorio Emanuele II","Galleria Vittorio Emanuele II, Milan"],["Teatro alla Scala","Teatro alla Scala, Milan"],["Evening in Brera","Brera, Milan"]],
-  f:"Risotto alla Milanese, ossobuco, cotoletta. Try Damm-atrà or Osteria Milanese OSSBUS.",
-  tip:"Take a mid-morning train, then go up the Duomo rooftop in late afternoon for golden light. Metro M1/M3 to Duomo."},
- {dt:"Oct 18",city:"Milan",t:"Last Supper + Milan (+ Lake Como)",ov:"Last Supper, Castello, Navigli (+ optional Lake Como)",wp:"The Last Supper (Leonardo)",i:"Reserve the Last Supper well in advance. Lake Como is an optional add-on if you want a lake fix.",
-  s:[["Last Supper, Santa Maria delle Grazie","Santa Maria delle Grazie, Milan"],["Castello Sforzesco","Castello Sforzesco, Milan"],["Leonardo da Vinci Science Museum","Museo Nazionale della Scienza e della Tecnologia Leonardo da Vinci, Milan"],["Navigli canals + aperitivo","Navigli, Milan"]],
-  f:"Dinner: Bela Tusa Trattoria or Premiata Trattoria Arlati dal 1936.",
-  tip:"Book the earliest Last Supper slot. Navigli is liveliest 6–9 PM for aperitivo.", como:true},
- {dt:"Oct 19",city:"Milan",t:"Departure",ov:"Departure from Milan",wp:"Galleria Vittorio Emanuele II",i:"For a later flight, enjoy a last Duomo/Galleria/Brera walk or shopping.",
-  s:[["Milano Centrale","Milano Centrale"],["Malpensa Airport (MXP)","Milan Malpensa Airport"],["Linate Airport (LIN)","Milan Linate Airport"]],
-  f:"",tip:"Malpensa Express from Centrale/Cadorna ~50 min; Linate via M4 ~20 min. Arrive 3 hours before international flights."}
+ {dt:"Oct 12",dow:"Mon",city:"Rome",t:"Arrive in Rome",ov:"Arrive + Trevi, Pantheon, Piazza Navona",wp:"Trevi Fountain",
+  i:"An easy first day after the flight. The order below is a single walking loop from the hotel area: Repubblica → Trevi → Pantheon → Navona → Campo de' Fiori. Times assume a late-morning arrival; shift everything if your flight lands later.",
+  tl:[["~10:30 AM","Land at Fiumicino (FCO), clear passport control (allow extra time for EES registration) and collect bags.","Fiumicino Airport","move"],
+   ["~11:45 AM","Leonardo Express train to Roma Termini (32 min), then a 12-minute walk or short taxi to the hotel on Via Cavour.","Roma Termini","move"],
+   ["12:30 PM","Drop bags at the hotel (check-in usually opens ~2–3 PM).","","hotel"],
+   ["1:00 PM","Casual lunch in the Monti side streets: supplì, Roman pizza or a first carbonara.","Monti, Rome","food"],
+   ["2:30 PM","Check in, freshen up, short rest.","","hotel"],
+   ["3:30 PM","Piazza della Repubblica: start of the walking loop (Metro A to Repubblica, or a 10-minute walk).","Piazza della Repubblica, Rome","sight"],
+   ["4:15 PM","Walk Via Nazionale / Via del Tritone to the Trevi Fountain (~20 min). Coin toss and gelato.","Trevi Fountain, Rome","sight"],
+   ["5:15 PM","Pantheon (10-minute walk). Short visit; entry is ticketed.","Pantheon, Rome","sight"],
+   ["6:15 PM","Piazza Navona (5 minutes on foot) for the evening light.","Piazza Navona, Rome","sight"],
+   ["7:30 PM","Dinner around Piazza Navona / Campo de' Fiori: Ristorante Virginiae or Osteria Dar Bruttone. Try cacio e pepe, amatriciana, saltimbocca and Roman artichokes.","Campo de' Fiori, Rome","food"],
+   ["9:00 PM","Taxi or bus back to the hotel, or walk to Trevi at night (~20 min) then taxi. Early night.","Trevi Fountain, Rome","move"]],
+  route:{o:"Piazza della Repubblica, Rome",w:["Trevi Fountain, Rome","Pantheon, Rome","Piazza Navona, Rome"],d:"Campo de' Fiori, Rome"},
+  tx:[["Train","Fiumicino → Roma Termini (Leonardo Express)","32 min","{e:14}"],["Walk / taxi","Termini → hotel, Via Cavour","12 min walk, 5 min taxi","Free / {e:8-12}"],["Walk","Repubblica → Trevi → Pantheon → Navona → Campo de' Fiori","~1 h of walking in total","Free"],["Taxi","Evening return to hotel","10–15 min","{e:10-15}"]],
+  tip:"Trevi and the Pantheon are calmest before 8:30 AM or after 9 PM. Sit-down lunch and dinner are the best time-savers on a jet-lagged day."},
+ {dt:"Oct 13",dow:"Tue",city:"Rome",t:"Ancient Rome",ov:"Colosseum, Forum, Palatine, Monti",wp:"Colosseum",
+  i:"The route flows outward from the Colosseum, up to the Capitoline, then across to Trevi, Spanish Steps and Piazza del Popolo, so you never double back. Reserve timed Colosseum entry in advance.",
+  tl:[["8:00 AM","Breakfast, then a 12-minute walk from Via Cavour to the Colosseum.","Colosseum, Rome","move"],
+   ["9:00 AM","Colosseum, timed entry (1.5–2 h). Bring photo ID that matches the ticket.","Colosseum, Rome","sight"],
+   ["11:00 AM","Roman Forum, then Palatine Hill (same combined ticket, 1.5–2 h). Enter from the Colosseum side and exit toward Via dei Fori Imperiali.","Roman Forum, Rome","sight"],
+   ["1:00 PM","Lunch in Monti (10 minutes north): carbonara, Roman pizza, porchetta sandwich or supplì.","Monti, Rome","food"],
+   ["2:30 PM","Monument to Victor Emmanuel II and Piazza Venezia (15 minutes on foot). Lift to the terrace is optional.","Piazza Venezia, Rome","sight"],
+   ["3:15 PM","Capitoline Hill and Piazza del Campidoglio, right behind the monument.","Capitoline Hill, Rome","sight"],
+   ["4:00 PM","Walk to the Trevi Fountain (~10 min). Gelato stop.","Trevi Fountain, Rome","sight"],
+   ["4:45 PM","Spanish Steps (10 minutes on foot).","Spanish Steps, Rome","sight"],
+   ["5:45 PM","Via del Babuino to Piazza del Popolo (12 min) for golden hour.","Piazza del Popolo, Rome","sight"],
+   ["6:45 PM","Metro A from Flaminio to Termini (~10 min), then walk to the hotel. Or taxi.","Flaminio metro station, Rome","move"],
+   ["7:45 PM","Dinner in Monti near the hotel; early night before the train day.","Monti, Rome","food"]],
+  route:{o:"Colosseum, Rome",w:["Roman Forum, Rome","Piazza Venezia, Rome","Capitoline Hill, Rome","Trevi Fountain, Rome","Spanish Steps, Rome"],d:"Piazza del Popolo, Rome"},
+  tx:[["Walk","Hotel → Colosseum","12 min","Free"],["Walk","Colosseum → Forum → Monti → Piazza Venezia → Capitoline → Trevi → Spanish Steps → Popolo","~2.5 h of walking, spread across the day","Free"],["Metro A","Flaminio → Termini","~10 min","{e:1.5}"],["Taxi (alt.)","Popolo → hotel","20 min","{e:12-18}"]],
+  tip:"The first Colosseum slot beats both crowds and midday heat. Wear comfortable shoes: this is the longest walking day in Rome."},
+ {dt:"Oct 14",dow:"Wed",city:"Bologna",t:"Rome → Bologna",ov:"Rome → Bologna + historic centre",wp:"Piazza Maggiore",
+  i:"Check out of Rome, take the fast train (about 2 h) and start Bologna with a tidy loop: Piazza Maggiore → San Petronio → Neptune → Quadrilatero → Two Towers.",
+  tl:[["8:00 AM","Breakfast and pack.","","hotel"],
+   ["9:15 AM","Check out of the Rome hotel and walk to Roma Termini (12 min).","Roma Termini","move"],
+   ["9:45 AM","Arrive at Termini early; find your platform on the board (about 15 minutes before departure).","Roma Termini","move"],
+   ["~10:15 AM","Frecciarossa or Italo to Bologna Centrale (about 2 h). A mid-morning train avoids commuter crowds.","Roma Termini","move"],
+   ["~12:30 PM","Arrive at Bologna Centrale. Walk down Via dell'Indipendenza to the centre and hotel (10–15 min), or take a bus or taxi. Drop bags.","Bologna Centrale","hotel"],
+   ["1:00 PM","Lunch: tagliatelle al ragù or tortellini in brodo at Trattoria dal Biassanot or Da Cesari.","Trattoria da Cesari Bologna","food"],
+   ["2:30 PM","Check in, then Piazza Maggiore.","Piazza Maggiore, Bologna","sight"],
+   ["3:00 PM","Basilica di San Petronio (free entry, ~30 min).","Basilica di San Petronio, Bologna","sight"],
+   ["3:45 PM","Neptune Fountain (2 minutes away).","Fontana del Nettuno, Bologna","sight"],
+   ["4:15 PM","Quadrilatero market streets (Via Pescherie Vecchie, Via Drapperie): mortadella, Parmigiano, balsamic.","Quadrilatero, Bologna","sight"],
+   ["5:15 PM","Walk east (~10 min) to the Two Towers. Optional climb of the Asinelli Tower (498 steps, book ahead).","Due Torri, Bologna","sight"],
+   ["6:30 PM","Aperitivo under the porticoes.","Via Zamboni, Bologna","food"],
+   ["7:45 PM","Dinner: tagliatelle, lasagne verdi or tortellini in brodo.","Piazza Maggiore, Bologna","food"]],
+  route:{o:"Bologna Centrale",w:["Piazza Maggiore, Bologna","Basilica di San Petronio, Bologna","Fontana del Nettuno, Bologna","Quadrilatero, Bologna"],d:"Due Torri, Bologna"},
+  tx:[["Walk","Rome hotel → Roma Termini","12 min","Free"],["High-speed train","Roma Termini → Bologna Centrale","~2 h","{e:25-50}"],["Walk / bus / taxi","Bologna Centrale → hotel","10–15 min","Free / {e:1.5-2} / {e:10-14}"],["Walk","Piazza Maggiore → San Petronio → Neptune → Quadrilatero → Two Towers","~30 min of walking","Free"]],
+  tip:"Book a specific train and seat in advance. Bologna is compact and flat, so you can leave the city buses behind after arrival."},
+ {dt:"Oct 15",dow:"Thu",city:"Bologna",t:"Florence + Pisa day trip",ov:"Florence + Pisa day trip",wp:"Florence Cathedral",
+  i:"The most ambitious day. The order is Florence's Duomo → Signoria → Ponte Vecchio → Oltrarno lunch, then train to Pisa and back. Skip Pisa for a relaxed Florence.",
+  tl:[["7:15 AM","Walk from the hotel to Bologna Centrale (10–15 min).","Bologna Centrale","move"],
+   ["~7:40 AM","High-speed train to Firenze Santa Maria Novella (35–40 min).","Bologna Centrale","move"],
+   ["8:30 AM","Walk 10 minutes to the Duomo complex: cathedral, baptistery and Giotto's Campanile. Climbs need a reservation.","Duomo di Firenze","sight"],
+   ["9:45 AM","Piazza della Signoria and the outside of Palazzo Vecchio (7–10 min south).","Piazza della Signoria, Florence","sight"],
+   ["10:45 AM","Ponte Vecchio (5 minutes on foot); cross into the Oltrarno.","Ponte Vecchio, Florence","sight"],
+   ["12:00 PM","Lunch in the Oltrarno / Santo Spirito: ribollita, schiacciata, or bistecca alla Fiorentina if you're hungry.","Santo Spirito, Florence","food"],
+   ["1:15 PM","Walk back to Santa Maria Novella (~20 min) and gelato on the way.","Firenze Santa Maria Novella","move"],
+   ["~1:45 PM","Regional or fast train to Pisa Centrale (~1 h).","Firenze Santa Maria Novella","move"],
+   ["3:00 PM","From Pisa Centrale to Piazza dei Miracoli: LAM Rossa bus (~10 min) or a 25-minute walk.","Pisa Centrale","move"],
+   ["3:30 PM","Piazza dei Miracoli: Leaning Tower (timed tickets), cathedral, baptistery and Camposanto.","Piazza dei Miracoli, Pisa","sight"],
+   ["5:15 PM","Back to Pisa Centrale.","Pisa Centrale","move"],
+   ["~5:45 PM","Train Pisa → Bologna (~2 h, may change in Florence).","Pisa Centrale","move"],
+   ["~8:00 PM","Arrive in Bologna; late dinner near the hotel.","Bologna Centrale","food"]],
+  route:{o:"Firenze Santa Maria Novella",w:["Duomo di Firenze","Piazza della Signoria, Florence"],d:"Ponte Vecchio, Florence"},
+  tx:[["High-speed train","Bologna → Firenze S.M. Novella","35–40 min","{e:10-25}"],["Walk","Florence sights loop","~2 km / 1 h+ of walking","Free"],["Regional train","Firenze S.M. Novella → Pisa Centrale","~1 h","{e:9-12}"],["Bus / walk","Pisa Centrale ↔ Piazza dei Miracoli","10 min bus, 25 min walk","{e:1.5} / Free"],["Train","Pisa Centrale → Bologna Centrale","~2 h","{e:20-35}"]],
+  tip:"Leave Pisa by about 5–6 PM to be back in Bologna at a reasonable hour. Book Tower tickets and rail seats ahead. Skip the Uffizi unless art is your priority."},
+ {dt:"Oct 16",dow:"Fri",city:"Bologna",t:"Venice day trip",ov:"Venice day trip",wp:"Grand Canal (Venice)",
+  i:"A no-backtracking sequence: Santa Lucia → Cannaregio → Rialto → St. Mark's → vaporetto up the Grand Canal → Dorsoduro → back to the station.",
+  tl:[["6:45 AM","Walk to Bologna Centrale.","Bologna Centrale","move"],
+   ["~7:15 AM","Train to Venezia Santa Lucia (about 1.5 h). Use Santa Lucia, not Mestre.","Bologna Centrale","move"],
+   ["9:00 AM","Arrive at Santa Lucia; walk into Cannaregio via Strada Nova and the Jewish Ghetto (quiet, local side).","Venezia Santa Lucia","sight"],
+   ["10:15 AM","Rialto Bridge and Rialto Market (~15 min on foot).","Rialto Bridge, Venice","sight"],
+   ["11:15 AM","Walk to St. Mark's Square (~15 min, follow the signs). Basilica, Campanile and the outside of the Doge's Palace.","Piazza San Marco, Venice","sight"],
+   ["1:00 PM","Lunch of cicchetti, sarde in saor or baccalà mantecato in a bacaro a few streets off the square.","Castello, Venice","food"],
+   ["2:15 PM","Vaporetto Line 1 from San Zaccaria or Vallaresso up the Grand Canal to Accademia (~25 min). Or take a gondola (~€80 for 30 min, if you want one).","Accademia vaporetto stop, Venice","move"],
+   ["3:00 PM","Dorsoduro: Accademia Bridge, Zattere promenade and quiet canals.","Dorsoduro, Venice","sight"],
+   ["4:45 PM","Line 1 or 2 from Accademia back to Ferrovia (~20 min), or walk 25 minutes.","Ferrovia vaporetto stop, Venice","move"],
+   ["5:30 PM","Early cicchetti and a spritz near the station.","Cannaregio, Venice","food"],
+   ["~6:30 PM","Train back to Bologna (arrive ~8:00 PM).","Venezia Santa Lucia","move"]],
+  route:{o:"Venezia Santa Lucia",w:["Cannaregio, Venice","Rialto Bridge, Venice"],d:"Piazza San Marco, Venice"},
+  tx:[["High-speed train","Bologna → Venezia Santa Lucia","~1.5 h","{e:20-40}"],["Walk","Santa Lucia → Cannaregio → Rialto → St. Mark's","~1.5 h with stops","Free"],["Vaporetto Line 1","San Zaccaria → Accademia","25 min","{e:9.5} single"],["Vaporetto / walk","Accademia → Ferrovia","20 min / 25 min","{e:9.5} / Free"],["Train","Santa Lucia → Bologna","~1.5 h","{e:20-40}"]],
+  tip:"Take the early train so St. Mark's is quiet. There are no cars in Venice, so wear comfortable shoes and travel light. Buy a 24-hour vaporetto pass if you plan more than 3 rides."},
+ {dt:"Oct 17",dow:"Sat",city:"Milan",t:"Bologna → Milan",ov:"Bologna → Milan + Duomo/Brera",wp:"Milan Cathedral",
+  i:"Check out, ride the fast train (about 1 h), then a walking chain from the Duomo: Cathedral → Galleria → La Scala → Brera.",
+  tl:[["8:00 AM","Breakfast, pack, check out of Bologna by ~9:00.","","hotel"],
+   ["9:30 AM","Walk to Bologna Centrale.","Bologna Centrale","move"],
+   ["~10:15 AM","High-speed train to Milano Centrale (about 1 h).","Bologna Centrale","move"],
+   ["11:15 AM","Arrive at Milano Centrale; take the metro to the hotel and drop bags (M3 to Missori for Hotel Dei Cavalieri).","Milano Centrale","move"],
+   ["12:15 PM","Lunch near the Duomo: cotoletta alla Milanese or risotto alla Milanese.","Piazza del Duomo, Milan","food"],
+   ["1:30 PM","Duomo di Milano and rooftop terraces (1.5–2 h). Book online in advance.","Duomo di Milano","sight"],
+   ["3:30 PM","Galleria Vittorio Emanuele II (2 minutes from the Duomo).","Galleria Vittorio Emanuele II, Milan","sight"],
+   ["4:15 PM","Teatro alla Scala and its museum (a 5-minute walk through the Galleria).","Teatro alla Scala, Milan","sight"],
+   ["5:00 PM","Walk north (10–12 min) to Brera: Via Brera and the Pinacoteca if open.","Brera, Milan","sight"],
+   ["6:30 PM","Aperitivo in Brera.","Brera, Milan","food"],
+   ["8:00 PM","Dinner: Damm-atrà Ristorante Milanese or Osteria Milanese OSSBUS. Try ossobuco and risotto alla Milanese.","Brera, Milan","food"]],
+  route:{o:"Duomo di Milano",w:["Galleria Vittorio Emanuele II, Milan","Teatro alla Scala, Milan"],d:"Brera, Milan"},
+  tx:[["Walk","Bologna hotel → Bologna Centrale","10–15 min","Free"],["High-speed train","Bologna Centrale → Milano Centrale","~1 h","{e:20-40}"],["Metro","Milano Centrale → hotel (M3 for Missori)","~15 min","{e:2.2}"],["Walk","Duomo → Galleria → La Scala → Brera","~30 min of walking","Free"]],
+  tip:"A mid-morning train lets you eat lunch after check-in. Go up the Duomo rooftop in late afternoon for golden light."},
+ {dt:"Oct 18",dow:"Sun",city:"Milan",t:"Last Supper + Milan (+ Lake Como option)",ov:"Last Supper, Science Museum, Castello, Navigli (+ optional Lake Como)",wp:"The Last Supper (Leonardo)",
+  i:"Re-ordered to cut backtracking: the Last Supper and the Leonardo Science Museum are five minutes apart, so they go first, then Castello, then the Navigli by metro. Prefer the lake? Open the Lake Como plan below.",
+  tl:[["7:45 AM","Metro or tram to Santa Maria delle Grazie (M1 Conciliazione or M2 Cadorna).","Santa Maria delle Grazie, Milan","move"],
+   ["8:15 AM","The Last Supper, timed entry (about 15 minutes inside). Arrive 15 minutes early with your reservation.","Santa Maria delle Grazie, Milan","sight"],
+   ["9:45 AM","Walk 8 minutes to the Leonardo da Vinci Science Museum: Leonardo's machines and the Enrico Toti submarine (~2 h).","Museo Nazionale della Scienza e della Tecnologia Leonardo da Vinci, Milan","sight"],
+   ["12:15 PM","Lunch around Sant'Ambrogio / Carrobbio.","Basilica di Sant'Ambrogio, Milan","food"],
+   ["1:45 PM","Metro M2 to Cadorna (1 stop), then a 10-minute walk to Castello Sforzesco.","Castello Sforzesco, Milan","move"],
+   ["2:15 PM","Castello Sforzesco courtyards and museums; then Sempione Park and Arco della Pace.","Castello Sforzesco, Milan","sight"],
+   ["5:00 PM","Metro M2 from Cadorna to Porta Genova (~10 min).","Porta Genova, Milan","move"],
+   ["5:30 PM","Navigli canals: stroll the Naviglio Grande.","Navigli, Milan","sight"],
+   ["6:30 PM","Milanese aperitivo on the canal.","Navigli, Milan","food"],
+   ["8:00 PM","Dinner: Bela Tusa Trattoria or Premiata Trattoria Arlati dal 1936.","Navigli, Milan","food"]],
+  route:{o:"Santa Maria delle Grazie, Milan",w:["Museo Nazionale della Scienza e della Tecnologia Leonardo da Vinci, Milan","Basilica di Sant'Ambrogio, Milan","Castello Sforzesco, Milan"],d:"Navigli, Milan",mode:"transit"},
+  tx:[["Metro / tram","Hotel → Santa Maria delle Grazie","10–20 min","{e:2.2}"],["Walk","Grazie → Science Museum → Sant'Ambrogio","~20 min","Free"],["Metro M2","Sant'Ambrogio → Cadorna, walk to Castello","~15 min","{e:2.2}"],["Metro M2","Cadorna → Porta Genova (Navigli)","~10 min","{e:2.2}"],["24-hour pass (optional)","Metro, tram and bus","1 day","{e:8}"]],
+  tip:"Sunday: Milan is quieter, but some smaller shops close and rail timetables are lighter. Book the earliest Last Supper slot. Navigli is liveliest 6–9 PM.",como:true},
+ {dt:"Oct 19",dow:"Mon",city:"Milan",t:"Departure",ov:"Departure from Milan",wp:"Galleria Vittorio Emanuele II",
+  i:"Times assume a mid-afternoon flight. Many museums are closed on Mondays, so keep it to a walk and a last shop.",
+  tl:[["8:00 AM","Breakfast and pack.","","hotel"],
+   ["9:00 AM","Check out (leave bags at the hotel if needed). Last stroll: Duomo and Galleria.","Galleria Vittorio Emanuele II, Milan","sight"],
+   ["10:00 AM","Shopping around Via Montenapoleone or a walk through Brera.","Via Montenapoleone, Milan","sight"],
+   ["12:00 PM","Final lunch.","Milan","food"],
+   ["1:30 PM","Collect bags and head to the airport.","Milano Centrale","move"],
+   ["≈3 h before flight","Arrive at the airport. Malpensa Express from Centrale or Cadorna takes ~50 min. Linate is 20 minutes by metro M4.","Milan Malpensa Airport","move"]],
+  route:{o:"Duomo di Milano",w:["Galleria Vittorio Emanuele II, Milan"],d:"Via Montenapoleone, Milan"},
+  tx:[["Metro","Hotel → Milano Centrale or Cadorna","~15 min","{e:2.2}"],["Malpensa Express","Centrale / Cadorna → Malpensa (MXP)","~50 min","{e:13}"],["Metro M4","San Babila → Linate (LIN)","~20 min","{e:2.2}"]],
+  tip:"Arrive at the airport about 3 hours before an international flight. Fares are estimates; confirm with Trenord/Malpensa Express."}
 ];
-const COMO=[["8:15","Last Supper (earliest slot, ~45 min). Coffee nearby."],["9:30","Quick Castello Sforzesco walk-through, then metro to Milano Centrale."],["10:30","Train to <b>Como San Giovanni</b> (~40 min) or <b>Varenna-Esino</b> (~1 h 10)."],["11:30","Lakefront, Duomo of Como, lunch by the water."],["1:30 PM","Brunate funicular for lake views, or a ferry to <b>Bellagio</b> or Varenna."],["4:30 PM","Head back; trains to Milan are frequent."],["6:30 PM","Back in Milan for aperitivo at Navigli. Science Museum is skipped on this plan."]];
+const COMO=[["8:15 AM","Last Supper (earliest slot, ~15 min inside) plus a coffee nearby."],["9:15 AM","Walk to Cadorna, M2 to Milano Centrale (~15 min)."],["10:15 AM","Train to <b>Como San Giovanni</b> (~40 min)."],["11:00 AM","Como lakefront, cathedral and lunch by the water."],["1:30 PM","Funicular to Brunate for views (about 1 h round trip)."],["3:15 PM","Fast ferry Como → <b>Bellagio</b> (about 40–60 min; slower boats take longer)."],["4:15 PM","Bellagio stroll. Ferry to <b>Varenna</b> (~15 min) around 5:30 PM."],["6:00 PM","Train Varenna-Esino → Milano Centrale (~1 h 10 min)."],["8:30 PM","Aperitivo and late dinner in Milan. Science Museum and Castello are skipped on this plan."]];
 const TRAINS=[
  ["Rome → Bologna","Roma Termini → Bologna Centrale","~2 h",25,50,"Roma Termini","Bologna Centrale"],
  ["Bologna → Florence","Bologna Centrale → Firenze S.M. Novella","35–40 min",10,25,"Bologna Centrale","Firenze Santa Maria Novella"],
@@ -332,17 +439,38 @@ $("mosaic").innerHTML=[["Colosseum","Colosseum, Rome"],["Piazza Maggiore","Piazz
 $("hotelBox").innerHTML=CITIES.map(c=>`<h3>${c.name} <span class="tag">${c.dates}</span></h3><div class="grid">`+c.hotels.map(h=>`<div class="card" style="padding:0;overflow:hidden">${photo(h.wp,h.near,"wide").replace('style="margin:0"','style="margin:0;border-radius:0"')}<div style="padding:16px"><b style="font-size:18px">${h.n}</b><br><span class="sm">${h.a}</span><p>${h.d}</p><p><b class="hp" data-lo="${h.lo}" data-hi="${h.hi}">${eur(h.lo)}–${eur(h.hi)}</b> <span class="sm">per night (est.)</span></p><a class="btn fill" target="_blank" rel="noopener" href="${gm(h.q)}">Map</a><a class="btn" target="_blank" rel="noopener" href="${h.site}">Website</a><a class="btn" target="_blank" rel="noopener" href="${gimg(h.q)}">Photos</a></div></div>`).join("")+`</div>`).join("");
 
 // days
+const tokE=s=>s.replace(/\{e:([\d.\-]+)\}/g,'<span data-e="$1"></span>');
+const dirs=(r)=>"https://www.google.com/maps/dir/?api=1&origin="+encodeURIComponent(r.o)+"&destination="+encodeURIComponent(r.d)+(r.w&&r.w.length?"&waypoints="+encodeURIComponent(r.w.join("|")):"")+"&travelmode="+(r.mode||"walking");
+const TY={sight:"Sight",food:"Eat",move:"Travel",hotel:"Hotel"};
+function hotelBlock(city,mode,extra){
+  const c=CITIES.find(x=>x.id===city),h=c.hotels[HSEL[city]],alt=c.hotels[1-HSEL[city]];
+  const box=(hh,title,cls)=>`<div><span class="tag">${title}</span> <b>${hh.n}</b> <span class="sm">· ${hh.a}</span><br><b class="hp" data-lo="${hh.lo}" data-hi="${hh.hi}">${eur(hh.lo)}–${eur(hh.hi)}</b> <span class="sm">per night (est.)</span> <a class="btn" target="_blank" rel="noopener" href="${gm(hh.q)}">Map</a><a class="btn" target="_blank" rel="noopener" href="${hh.site}">Website</a></div>`;
+  let head="";
+  if(mode==="in")head=`<b>Check-in: ${c.name}</b> <span class="sm">(${c.dates}; usual check-in ~2–3 PM, ask for luggage storage before then)</span>`;
+  else if(mode==="stay")head=`<b>Tonight: ${c.name}</b> <span class="sm">(${extra})</span>`;
+  else if(mode==="outin"){const p=CITIES.find(x=>x.id===extra);head=`<b>Check out of ${p.name}, check in to ${c.name}</b> <span class="sm">(${c.dates}; usual check-in ~2–3 PM, ask for luggage storage before then)</span>`}
+  else head=`<b>Check-out: ${c.name}</b> <span class="sm">(most hotels: by ~11 AM; luggage storage is usually free)</span>`;
+  return `<div class="hb">${head}${mode==="out"?box(h,"Your hotel"):box(h,"Your pick")+box(alt,"Alternative")}<p class="sm" style="margin:6px 0 0">Change your pick in the Budget tab; it updates here.</p></div>`}
+function renderHB(){document.querySelectorAll(".hbx").forEach(e=>{e.innerHTML=hotelBlock(e.dataset.city,e.dataset.mode,e.dataset.extra||"")})}
 $("dayBox").innerHTML=DAYS.map(d=>{
-  const id="d"+d.dt.replace(" ","");
-  const como=d.como?`<details class="como"><summary>Optional: squeeze in Lake Como today</summary>
-    <p class="sm">Best if you'd rather trade the Science Museum and a slow afternoon for the lake. Times are approximate; check timetables.</p>
+  const id="d"+d.dt.replace(" ","");const st=STAY[d.dt];
+  const como=d.como?`<details class="como"><summary>Optional Lake Como plan for today (replaces everything after the Last Supper)</summary>
+    <p class="sm">Best if you'd rather swap the Science Museum, Castello and a long Navigli evening for the lake. Times are approximate and Sunday timetables can be lighter, so check Trenitalia and Navigazione Laghi first.</p>
     <ul class="tl">${COMO.map(x=>`<li><b>${x[0]}</b><span>${x[1]}</span></li>`).join("")}</ul>
     <div class="grid" style="margin:10px 0">${photo("Lake Como","Lake Como")}${photo("Bellagio, Italy","Bellagio")}${photo("Varenna","Varenna")}</div>
-    <p class="sm">Extra cost roughly <b data-e="30-60"></b> for trains, a ferry and lunch. Skip it if the Last Supper is your only morning slot or the weather is poor.</p>
-    <a class="btn" target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query=Como%20San%20Giovanni%20railway%20station">Como (map)</a><a class="btn" target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query=Varenna-Esino%20railway%20station">Varenna-Esino (map)</a><a class="btn" target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query=Bellagio%2C%20Lake%20Como">Bellagio (map)</a><a class="btn" target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query=Milano%20Cadorna%20station">Milano Cadorna (map)</a>
+    <p class="sm">Extra cost roughly <b data-e="30-60"></b> for trains, ferries and lunch. Skip if the weather is poor.</p>
+    <a class="btn" target="_blank" rel="noopener" href="${dirs({o:"Como San Giovanni railway station",w:["Brunate","Bellagio, Lake Como"],d:"Varenna-Esino railway station",mode:"transit"})}">Lake route (transit)</a><a class="btn" target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query=Como%20San%20Giovanni%20railway%20station">Como (map)</a><a class="btn" target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query=Varenna-Esino%20railway%20station">Varenna-Esino</a><a class="btn" target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query=Bellagio%2C%20Lake%20Como">Bellagio</a>
   </details>`:"";
-  return `<article class="card day" id="${id}"><div class="hd"><span class="date">${d.dt}</span><span class="tag">${d.city}</span><h3>${d.t}</h3></div><p class="sm" style="margin:6px 0 0">${d.i}</p>
-  <div class="body"><div><ul class="stops">${d.s.map(s=>`<li>${s[0]} · <a target="_blank" rel="noopener" href="${gm(s[1])}">map</a></li>`).join("")}</ul>${d.f?`<div class="food"><b>Eat:</b> ${d.f}</div>`:""}<div class="tip"><b>Timing:</b> ${d.tip}</div></div>${photo(d.wp,d.wp.replace(/, Rome| \(Venice\)| \(Leonardo\)/,""))}</div>${como}</article>`}).join("");
+  return `<article class="card day" id="${id}"><div class="hd"><span class="date">${d.dt} · ${d.dow}</span><span class="tag">${d.city}</span><h3>${d.t}</h3></div><p class="sm" style="margin:6px 0 0">${d.i}</p>
+  <div class="hbx" data-city="${st[0]}" data-mode="${st[1]}" data-extra="${st[2]||""}"></div>
+  <div class="body"><div>
+   <h4 class="sec">Timed plan</h4>
+   <ul class="tl2">${d.tl.map(x=>`<li><b class="tm">${x[0]}</b><span class="ty ${x[3]}">${TY[x[3]]}</span><span>${x[1]}${x[2]?` <a target="_blank" rel="noopener" href="${gm(x[2])}">map</a>`:""}</span></li>`).join("")}</ul>
+   <p><a class="btn fill" target="_blank" rel="noopener" href="${dirs(d.route)}">Open the day's route in Google Maps</a></p>
+   <h4 class="sec">Transportation today</h4>
+   <div class="scroll"><table class="txt"><tr><th>Mode</th><th>Route</th><th>Time</th><th>Cost (est.)</th></tr>${d.tx.map(x=>`<tr><td>${x[0]}</td><td>${x[1]}</td><td>${x[2]}</td><td>${tokE(x[3])}</td></tr>`).join("")}</table></div>
+   <div class="tip"><b>Tip:</b> ${d.tip}</div></div>
+   ${photo(d.wp,d.wp.replace(/, Rome| \(Venice\)| \(Leonardo\)/,""))}</div>${como}</article>`}).join("");
 
 // transport
 TRAINS.forEach(t=>{const [a,b]=[t[5],t[6]];$("trT").insertAdjacentHTML("beforeend",`<tr><td><b>${t[0]}</b></td><td><a target="_blank" rel="noopener" href="${gm(a)}">${a}</a> → <a target="_blank" rel="noopener" href="${gm(b)}">${b}</a></td><td>${t[2]}</td><td class="tp" data-lo="${t[3]}" data-hi="${t[4]}">${eur(t[3])}–${eur(t[4])}</td></tr>`)});
@@ -357,7 +485,7 @@ $("budBox").innerHTML=h;
 function calc(){let t=0,hh=0;CITIES.forEach(c=>{const s=(+$("r_"+c.id).value||0)*c.nights;$("t_"+c.id).textContent=fmt(s);t+=s;hh+=s});
  document.querySelectorAll(".oc").forEach(i=>t+=+i.value||0);if($("comoChk").checked)t+=+$("comoC").value||0;
  $("tot").textContent=fmt(t);$("tot2").textContent=fmt(t);$("pd").textContent=fmt(t/8);$("hs").textContent=t?Math.round(hh/t*100)+"%":"0%"}
-CITIES.forEach(c=>{const set=()=>{const x=c.hotels[+$("s_"+c.id).value];$("r_"+c.id).value=Math.round((x.lo+x.hi)/2*R);calc()};$("s_"+c.id).onchange=set;set()});
+CITIES.forEach(c=>{const set=()=>{const x=c.hotels[+$("s_"+c.id).value];HSEL[c.id]=+$("s_"+c.id).value;renderHB();$("r_"+c.id).value=Math.round((x.lo+x.hi)/2*R);calc()};$("s_"+c.id).onchange=set;set()});
 $("bt").addEventListener("input",calc);$("bt").addEventListener("change",calc);
 
 /* static euro spans */
